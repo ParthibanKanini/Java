@@ -1,0 +1,102 @@
+
+Docker setup: 
+=============
+
+In Docker, you build images while you run containers. 
+From one Docker image, many instances of containers can be spawned.
+
+docker images
+
+------------------------------------
+
+
+## Pull a Docker apache image
+docker pull apache/kafka
+
+------------------------------------
+
+
+## Run apache image in detach mode attach a name 'broker'
+docker run -d --name broker apache/kafka:latest
+## Run apache image in detach mode attach a name 'broker' and make the port accessible outside Docker container
+docker run -p 9092:9092 -d --name broker apache/kafka:latest
+
+
+## Open interactive shell in the 'broker' container
+docker exec --workdir /opt/kafka/bin/ -it broker sh
+
+Use 'exit' command to quit shell prompt
+
+
+## Create a topic in the Kafka queue
+./kafka-topics.sh --bootstrap-server localhost:9092 --create --topic test-topic
+./kafka-topics.bat --bootstrap-server localhost:9092 --create --topic test-topic
+
+
+## Write string events into the 'test-topic' using console producer
+./kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test-topic
+./kafka-console-producer.bat --bootstrap-server localhost:9092 --topic test-topic
+
+> Hello
+> Kafka World
+> Ctrl+c
+
+./kafka-console-producer.bat --bootstrap-server localhost:9092 --topic test-topic
+
+
+
+## Read the events from the 'test-topic' from beginning of the log
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+
+The consumer will continue to run until you exit out of it by entering Ctrl+c
+
+
+## Stop and remove container 
+docker rm -f broker
+
+## telnet if the port is exposed outside docker. Test in powershell using following command
+Test-NetConnection -ComputerName localhost -Port 9092
+
+
+------------------------------------
+
+## Run container with following command from the docker-compose.yml file directory
+docker compose up -d
+
+## Stop & remove container with the following command from the docker-compose.yml file directory.
+docker compose down
+
+
+------------------------------------
+
+## List all the images in Docker
+docker images
+
+## List all the active docker process
+docker ps
+
+docker inspect <container name/id>
+
+------------------------------------
+
+TODO: 
+=====
+Write java code in VSCode to publish and subscribe messages from Kafka
+Exposing ports using Docker compose and able to send and receive messages. 
+
+
+
+------------------------------------
+
+
+
+<<<<<<<<<<<<< ROUGH NOTES >>>>>>>>>>>>>>>
+
+
+docker run -p 9092:9092 -e KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT -e KAFKA_LISTENERS=INSIDE://:9093,OUTSIDE://:9092 -e KAFKA_ADVERTISED_LISTENERS=INSIDE://localhost:9093,OUTSIDE://localhost:9092 -e KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE --name kafka kafka:latest
+
+
+docker run -p 9092:9092 -d --name broker apache/kafka:latest
+
+

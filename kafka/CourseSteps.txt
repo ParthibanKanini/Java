@@ -1,0 +1,39 @@
+
+1. Setup Docker
+2. Pull Apache kafka image
+3. Use tools to
+    a) Create topic
+    b) Produce message into topic
+    c) Consume messages from topic
+4. Create a Spring boot application
+5. Create a producer using Spring KafkaTemplate & application configuration
+6. Create a consumer using Spring KafkaListener read from earliest (or) latest for a given group. 
+7. Create a consumer using Spring kafkaMessageListenerContainer read messages in single thread. 
+8. Create a consumer using Spring  read messages in single thread. 
+
+from earliest (or) latest for a given group. 
+
+
+TODO: 
+Blocking retry, Non-blocking retry, and dead letter queue mechanisms
+Write unit test cases
+Error handling in Spring KafkaTemplate producer
+Create a producer using Apache producer.
+Create a consumer using Apache consumer.
+Consume messages in (Single or Batch mode)
+
+Wrap the producer using a REST application
+
+change Kafka port and test the code. 
+
+================
+
+Message Partitioning & Consumer groups 
+    Groups and single consumer of group consuming the message  
+Message queueing & Pub-Sub 
+
+Create a zookeeper to manage the kafka
+
+Arch patterns with message brokers. 
+
+Batch listeners
